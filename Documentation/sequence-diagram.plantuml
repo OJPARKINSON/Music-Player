@@ -19,6 +19,4 @@ Server <-> MongoDB : Creates a playlist
 Server -> Frontend : Responds taking the user to the database
 Frontend -> User : Redirected to the new plalists page  
 
-
-
 @enduml
