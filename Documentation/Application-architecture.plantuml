@@ -1,4 +1,5 @@
 @startuml
+title Application archtecture
 
 package "Docker container" {
   database MongoDB {

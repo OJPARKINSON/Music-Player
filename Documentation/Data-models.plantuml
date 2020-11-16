@@ -1,4 +1,5 @@
 @startuml
+title Data Model
 
 class Album {
     ID : _id
@@ -8,18 +9,19 @@ class Album {
     Song : Song
 }
 
+class Playlist {
+    ID : _id
+    String Name
+    String Artwork
+    SongList : [Song]
+}
+
 class Song {
     ID : _id
     String Title
     String Artwork
     String Artist
     String Track
-}
-
-class Accounts {
-    ID : _id
-    String Email
-    String Hash
 }
 
 @enduml

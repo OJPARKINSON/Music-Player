@@ -1,0 +1,24 @@
+@startuml
+title Sequence Diagram
+
+actor User
+participant Frontend
+participant Server
+database MongoDB
+
+User -> Frontend : User starts music player
+Frontend <-> Server : Starts a session
+Frontend -> Server : Requests all songs and albums
+Server <-> MongoDB : Gets the songs and albums
+Server -> Frontend : Responds with the songs and albums
+Frontend -> User : Frontend displays user with the songs and albums
+
+User -> Frontend : Creates a playlist
+Frontend -> Server : Requests a playlist creation
+Server <-> MongoDB : Creates a playlist
+Server -> Frontend : Responds taking the user to the database
+Frontend -> User : Redirected to the new plalists page  
+
+
+
+@enduml
