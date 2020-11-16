@@ -4,13 +4,15 @@ class Album {
     ID : _id
     String Name
     String Artwork
+    String Artist
     Song : Song
 }
 
 class Song {
     ID : _id
-    String Name
+    String Title
     String Artwork
+    String Artist
     String Track
 }
 

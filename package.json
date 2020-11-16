@@ -1,0 +1,16 @@
+{
+  "name": "Music-Player",
+  "version": "1.0.0",
+  "description": "Music player application for my software developement apprenticeship ",
+  "main": "index.js",
+  "repository": "git@github.com:OJPARKINSON/Music-Player.git",
+  "author": "Oliver <olliepar01@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
