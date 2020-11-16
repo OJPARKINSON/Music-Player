@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.static('build'));
 app.get('/*', (req, res) => {
-  res.sendFile('index.html', { root: `/build/` });
+  res.sendFile('index.html', { root: `build/` });
 });
 
 app.listen(port, () => console.log('App listening on port ' + port));
