@@ -1,0 +1,23 @@
+@startuml
+
+class Album {
+    ID : _id
+    String Name
+    String Artwork
+    Song : Song
+}
+
+class Song {
+    ID : _id
+    String Name
+    String Artwork
+    String Track
+}
+
+class Accounts {
+    ID : _id
+    String Email
+    String Hash
+}
+
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+
+package "Docker container" {
+  database MongoDB {
+      [Music collection]
+      [User account collection]
+  }
+  cloud Express-Server {
+    [Backend routes]
+    [ReactJS frontend]
+  }
+}
+
+package Web-Browser {
+ [Web User]
+}
+
+[Web User] --> [ReactJS frontend]
+[ReactJS frontend] ---> [Backend routes]
+[Backend routes] ---> [Music collection]
+[Backend routes] ---> [User account collection]
+
+@enduml
