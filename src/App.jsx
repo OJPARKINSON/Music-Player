@@ -28,13 +28,14 @@ export const App = () => {
   return (
     <Router>
       <div>
+      <audio className="audio"></audio>
       <Header />
       <Switch>
         <Route path="/Album/:id">
-          <CollectionContainer type="Albums" songs={tracks}  />
+          <CollectionContainer type="Album" songs={tracks}  />
         </Route>
         <Route path="/Song/:id">
-          <CollectionContainer type="Songs" songs={tracks} />
+          <CollectionContainer type="Song" songs={tracks} />
         </Route>
         <Route path="/playlist/:id" >
           <CollectionContainer type="playlist" />

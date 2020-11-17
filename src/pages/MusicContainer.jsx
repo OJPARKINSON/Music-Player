@@ -48,7 +48,7 @@ export const MusicContainer = ({ type, songs, filteredTracks, setFilteredTracks}
                 }, [])
             )
         }
-    },[]);
+    },[songs]);
 
     const handleChange = ({target}) => {
         target.value !== "" ?
