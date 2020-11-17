@@ -31,7 +31,7 @@ const Navlink = styled(NavLink)`
 export const Header = () => (
     <Nav>
         <Navlink to="/">Music Player</Navlink>
-        <Navlink style={{"grid-column-start": "6"}} to="/Albums">Albums</Navlink>
+        <Navlink style={{"gridColumnStart": "6"}} to="/Albums">Albums</Navlink>
         <Navlink to="/Songs">Songs</Navlink>
         <Navlink to="/Playlists">Playlists</Navlink>
     </Nav>

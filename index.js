@@ -1,8 +1,11 @@
 const express = require('express');
+var cors = require('cors')
 
 const port = process.env.PORT || 5000;
 const app = express();
 const tracks = require('./fixtures/tracks')
+
+app.use(cors())
 
 app.post('/tracks', (req, res) => {
     res.send(tracks);
