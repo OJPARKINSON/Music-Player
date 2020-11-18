@@ -27,18 +27,19 @@ const TrackImage = styled.img`
     margin: 0 auto;
 `;
 
-
-
-const Track = ({track, type}) => (
+const Track = ({track, type, songs, setMusic}) => (
     <TrackListItem key={track.track_id}>
+        <TrackImage 
+            onClick={() => setMusic({ playingList: type === "Albums" ? songs.filter(({ album_id }) => album_id === track?.album_id) : [track], playing: true, currentSong: 0})} 
+            src={track.album_url} 
+        />
         <Link to={type !== "Albums" ? `/Song/${track.track_id}` : `/Album/${track.album_id}`}>
-            <TrackImage src={track.album_url} />
             <p>{track.track_name} {type !== "Albums" && `- ${track.artist_name}`}</p>
         </Link>
     </TrackListItem>
 );
 
-export const MusicContainer = ({ type, songs, filteredTracks, setFilteredTracks}) => {
+export const MusicContainer = ({ type, songs, filteredTracks, setFilteredTracks, setMusic}) => {
     useEffect(() => {
         if (type === 'Albums') {
             setFilteredTracks(
@@ -56,13 +57,12 @@ export const MusicContainer = ({ type, songs, filteredTracks, setFilteredTracks}
                 track_name.toLowerCase().includes(target.value.toLowerCase())
             )) : setFilteredTracks(songs);
     }
-
     return (
         <>
             <h1>{type}</h1>
             <input type="text" className="input" onChange={handleChange} placeholder="Search..." />
             <TrackList>
-                {filteredTracks.map(track => <Track type={type} track={track}/>)}
+                {filteredTracks.map(track => <Track setMusic={setMusic} songs={songs} type={type} track={track}/>)}
             </TrackList>
         </>
     );
