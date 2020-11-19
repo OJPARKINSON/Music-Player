@@ -8,3 +8,10 @@ export const togglePlay = (music) => {
         audio.pause()
     };
 }
+export const AlbumReduce = (songs) => 
+    songs.reduce((acc, current) => {
+        !acc.find(({ album_id }) => album_id === current.album_id) && acc.push(current);
+        return acc
+    }, []);
+
+export const randomize = (a, b) =>  Math.random() - 0.5

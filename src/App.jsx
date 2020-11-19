@@ -10,18 +10,19 @@ import './App.css';
 import { Header } from './components/header';
 import { MusicControls } from './components/MusicControls';
 import { CollectionContainer } from './pages/CollectionContainer';
-import { MusicContainer } from './pages/MusicContainer';
+import { MusicList } from './pages/MusicList';
+import { Playlists, CreatePlaylist, PlaylistDisplay } from './pages/Playlists';
 import { Home } from './pages/home';
 
 
 export const App = () => {
   const [tracks, setTracks] = useState([])
   const [filteredTracks, setFilteredTracks] = useState([]);
-  const [music, setMusic] = useState({ playingList: [], playing: false, currentSong: 0});
+  const [playback, setPlayback] = useState({ playingList: [], playing: false, currentSong: 0});
   useEffect(() => {
     Axios({
       url: 'http://localhost:5000/tracks', 
-      method: 'post',
+      method: 'get',
       responseType: "json"
     })
     .then(({data}) => {setTracks(data?.tracks); setFilteredTracks(data?.tracks);})
@@ -31,26 +32,29 @@ export const App = () => {
   return (
     <Router>
       <div>
-        <MusicControls music={music} setMusic={setMusic} />
+        <MusicControls playback={playback} setPlayback={setPlayback} />
         <Header />
         <Switch>
-          <Route path="/Album/:id">
-            <CollectionContainer type="Album" songs={tracks}  setMusic={setMusic} />
-          </Route>
-          <Route path="/Song/:id">
-            <CollectionContainer type="Song" songs={tracks} setMusic={setMusic} />
-          </Route>
-          <Route path="/playlist/:id" >
-            <CollectionContainer type="playlist" />
-          </Route>
-          <Route path="/Albums">
-            <MusicContainer type="Albums" setMusic={setMusic} songs={tracks} filteredTracks={filteredTracks} setFilteredTracks={setFilteredTracks}/>
-          </Route>
-          <Route path="/Songs">
-            <MusicContainer type="Songs" setMusic={setMusic} songs={tracks} filteredTracks={filteredTracks} setFilteredTracks={setFilteredTracks} />
+        <Route path="/playlist/new">
+            <CreatePlaylist songs={tracks}  />
           </Route>
           <Route path="/Playlists">
-            <MusicContainer type="Playlists" />
+            <Playlists />
+          </Route>
+          <Route path="/Album/:id">
+            <CollectionContainer type="Album" songs={tracks}  setPlayback={setPlayback} />
+          </Route>
+          <Route path="/Song/:id">
+            <CollectionContainer type="Song" songs={tracks} setPlayback={setPlayback} />
+          </Route>
+          <Route path="/Playlist/:id" >
+            <PlaylistDisplay type="Playlist" songs={tracks} setPlayback={setPlayback}/>
+          </Route>
+          <Route path="/Albums">
+            <MusicList type="Albums" setPlayback={setPlayback} songs={tracks} filteredTracks={filteredTracks} setFilteredTracks={setFilteredTracks}/>
+          </Route>
+          <Route path="/Songs">
+            <MusicList type="Songs" setPlayback={setPlayback} songs={tracks} filteredTracks={filteredTracks} setFilteredTracks={setFilteredTracks} />
           </Route>
           <Route path="/">
             <Home />

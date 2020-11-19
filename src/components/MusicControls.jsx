@@ -1,15 +1,12 @@
 import { useEffect } from "react";
-import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
-import IconButton from '@material-ui/core/IconButton';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
+import {IconButton, CardContent, makeStyles, Typography} from '@material-ui/core';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import PauseIcon from '@material-ui/icons/Pause';
-import { togglePlay } from '../components/utils';
+import ShuffleIcon from '@material-ui/icons/Shuffle';
+import { togglePlay, randomize } from '../components/utils';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -19,7 +16,14 @@ const useStyles = makeStyles((theme) => ({
       position: 'fixed',
       bottom: -20,
       flexDirection: 'column',
+      left: 0
     },
+    shuffle: {
+        position: 'fixed',
+        bottom: 10,
+        flexDirection: 'column',
+        right: 0
+      },
     content: {
       flex: '1 0 auto',
     },
@@ -45,39 +49,48 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export const MusicControls = ({music, setMusic}) => {
+export const MusicControls = ({playback, setPlayback}) => {
     const classes = useStyles();
     useEffect(() => {
-        togglePlay(music, setMusic);
-        console.log({music})
-    }, [music, setMusic])
+        togglePlay(playback, setPlayback);
+    }, [playback, setPlayback])
    
     return (
         <ControlsContainer className={classes.root}>
             <audio className="audio"></audio>
             <div className={classes.details}>
                 <CardContent className={classes.content}>
-                <Typography component="h5" variant="h5">
-                    {music?.playingList?.[music.currentSong]?.track_name}
-                </Typography>
-                <Typography variant="subtitle1" color="textSecondary">
-                    {music?.playingList?.[music.currentSong]?.artist_name}
-                </Typography>
+                    <Typography component="h5" variant="h5">
+                        {playback?.playingList?.[playback.currentSong]?.track_name}
+                    </Typography>
+                    <Typography variant="subtitle1" color="textSecondary">
+                        {playback?.playingList?.[playback.currentSong]?.artist_name}
+                    </Typography>
                 </CardContent>
             </div>
             <div className={classes.controls}>
-                <IconButton  disabled={!music.playingList[music.currentSong - 1]} aria-label="previous" onClick={() => setMusic({...music, currentSong: music.currentSong - 1})}>
+                <IconButton disabled={!playback.playingList[playback.currentSong - 1]} aria-label="previous" onClick={() => setPlayback({...playback, currentSong: playback.currentSong - 1})}>
                     <SkipPreviousIcon />
                 </IconButton>
-                <IconButton onClick={() => setMusic({...music, playing: !music.playing})} aria-label="play/pause">
-                    {music?.playing ? 
+                <IconButton onClick={() => setPlayback({...playback, playing: !playback.playing})} aria-label="play/pause">
+                    {playback?.playing ? 
                         <PauseIcon className={classes.playIcon} /> 
                             : 
                         <PlayArrowIcon className={classes.playIcon} /> 
                     }
                 </IconButton>
-                <IconButton disabled={!music.playingList[music.currentSong + 1]} aria-label="next" onClick={() => setMusic({...music, currentSong: music.currentSong + 1})} >
+                <IconButton disabled={!playback.playingList[playback.currentSong + 1]} aria-label="next" onClick={() => setPlayback({...playback, currentSong: playback.currentSong + 1})} >
                     <SkipNextIcon />
+                </IconButton>
+            </div>
+            <div className={classes.shuffle}>
+                <IconButton  
+                    disabled={!playback.playingList[1]} 
+                    aria-label="shuffle" 
+                    onClick={() => 
+                        setPlayback({...playback, playingList: playback.playingList.sort(() => randomize())})
+                    }>
+                    <ShuffleIcon fontSize="large" />
                 </IconButton>
             </div>
         </ControlsContainer>
