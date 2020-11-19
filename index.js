@@ -31,7 +31,7 @@ app.get('/tracks', (req, res) => {
     res.send(tracks);
 });
 
-app.get('/Playlists', (req, res) => {
+app.get('/playlists', (req, res) => {
     console.log(req.session)
     if (req.session.playlists) {
         return res.send(req.session.playlists);
@@ -42,7 +42,7 @@ app.get('/Playlists', (req, res) => {
 
 app.post('/playlist/new', (req, res) => {
     console.log(req.body)
-    const { name, description } = req?.body;
+    const { name, description } = req.body;
     const id = uuid.v4()
     if (req.session.playlists) {
         req.session.playlists = [
@@ -55,12 +55,12 @@ app.post('/playlist/new', (req, res) => {
         ];
     }
     console.log(req.session)
-    res.redirect(`http://localhost:3000/Playlist/${id}`);
+    res.redirect(`/Playlist/${id}`);
 });
 
 app.use(express.static('build'));
 app.get('/*', (req, res) => {
-  res.sendFile('index.html', { root: `build/` });
+    res.sendFile('index.html', { root: `/app/build/` });
 });
 
 app.listen(port, () => console.log('App listening on port ' + port));

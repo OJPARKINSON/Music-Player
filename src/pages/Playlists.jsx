@@ -37,7 +37,7 @@ export const Playlists = () => {
     const [playlists, setPlaylists] = useState(null);
     useEffect(() => {
         Axios({
-        url: 'http://localhost:5000/Playlists', 
+        url: '/playlists', 
         method: 'get',
         responseType: "json"
         })
