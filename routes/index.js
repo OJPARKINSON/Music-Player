@@ -1,5 +1,5 @@
 var uuid = require('uuid');
-const tracks = require('../fixtures/tracks');
+const { tracks } = require('../fixtures/tracks');
 const { PlaylistModel, SongModel } = require('../models/index');
 
 const routes = (app) => {
@@ -18,7 +18,7 @@ const routes = (app) => {
             if (err) {
                 return res.send(null);
             }
-            return res.send(playlists);
+            return res.send(playlists?.filter(({_id}) => _id === '5fb77defdc508d001246760d'));
         })
     });
 
@@ -32,6 +32,8 @@ const routes = (app) => {
                 }
                 return res.send(playlist);
             })
+        } else {   
+            return res.send(null);
         }
     });
 
@@ -57,7 +59,6 @@ const routes = (app) => {
                 }
                 if (operation === 'add') {
                     playlist.songs.push(track);
-                    console.log({playlist})
                     await PlaylistModel.findOneAndUpdate({id, user_id}, playlist, (err, newPlaylist) => {
                         if (err) {
                             console.log({err});

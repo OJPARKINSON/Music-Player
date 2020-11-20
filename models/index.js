@@ -11,7 +11,7 @@ const SongSchema = new Schema({
 });
 
 const PlaylistSchema = new Schema({
-    id: String,
+    id: { type: String, required: true },
     user_id: String,
     name: String,
     description: String,

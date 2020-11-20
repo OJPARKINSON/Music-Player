@@ -51,10 +51,24 @@ export const App = () => {
             <PlaylistDisplay type="Playlist" songs={tracks} playback={playback} setPlayback={setPlayback}/>
           </Route>
           <Route path="/Albums">
-            <MusicList type="Albums" playback={playback} setPlayback={setPlayback} songs={tracks} filteredTracks={filteredTracks} setFilteredTracks={setFilteredTracks}/>
+            <MusicList 
+              type="Albums" 
+              playback={playback} 
+              setPlayback={setPlayback} 
+              songs={tracks} 
+              filteredTracks={filteredTracks} 
+              setFilteredTracks={setFilteredTracks}
+            />
           </Route>
           <Route path="/Songs">
-            <MusicList type="Songs" playback={playback} setPlayback={setPlayback} songs={tracks} filteredTracks={filteredTracks} setFilteredTracks={setFilteredTracks} />
+            <MusicList 
+              type="Songs" 
+              playback={playback} 
+              setPlayback={setPlayback} 
+              songs={tracks} 
+              filteredTracks={filteredTracks} 
+              setFilteredTracks={setFilteredTracks} 
+            />
           </Route>
           <Route path="/">
             <Home playback={playback} setPlayback={setPlayback} songs={tracks} />

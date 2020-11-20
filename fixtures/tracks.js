@@ -1911,6 +1911,25 @@ const tracks = [
       track_id: "2FfQBGp8bUrgIwHQRuQWyE",
       preview_url: "https://p.scdn.co/mp3-preview/235c6a405575a27e7436b969b9d277e9d88ee1ad?cid=889c56fec9944ecfb7e0a4af6a50cfd1"
     }
-]
+];
 
-module.exports = { tracks };
+const SongFixture = [
+    {
+        artist_name: "Blossoms",
+        album_url: "https://i.scdn.co/image/ab67616d0000b273258d6688061ae2729981a417",
+        album_id: "7wCgsWaxfGis7NAHYn8JFk",
+        track_name: "Charlemagne",
+        track_id: "7H5WVBQdSnJ1zmu8JoD6pg",
+        preview_url: "https://p.scdn.co/mp3-preview/b92a34dff65b6a4c3f09fbb496c085359d378aaf?cid=889c56fec9944ecfb7e0a4af6a50cfd1"
+    }
+];
+
+const PlaylistFixture = { 
+    user_id: '123', 
+    id: '1234', 
+    name: "testName", 
+    description: 'testDescription',
+    songs: [SongFixture]
+}
+
+module.exports = { tracks, SongFixture, PlaylistFixture };

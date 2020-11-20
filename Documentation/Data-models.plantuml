@@ -1,18 +1,10 @@
 @startuml
 title Data Model
 
-class Album {
-    ID : _id
-    String Name
-    String Artwork
-    String Artist
-    Song : Song
-}
-
 class Playlist {
     ID : _id
     String Name
-    String Artwork
+    String Description
     SongList : [Song]
 }
 
