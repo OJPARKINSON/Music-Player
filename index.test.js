@@ -22,13 +22,20 @@ app.use((...args) => app.get('sessionMiddleware')(...args));
 routes(app);
 
 describe('/tracks', () => {
-  it('gets tracks', done => {
-    mockingoose(SongModel).toReturn(SongFixture);
-      request(app)
-        .get('/tracks')
-        .set('Accept', 'application/json')
-        .expect(200, done);
-    });
+  it('Gets the tracks from MongoDB', done => {
+    mockingoose(SongModel).toReturn(SongFixture, 'find');
+    request(app)
+      .get('/tracks')
+      .set('Accept', 'application/json')
+      .expect(200, done);
+  });
+  it('Returns empty with an MongoDB error', done => {
+    mockingoose(SongModel).toReturn(new Error('My Error'), 'find');
+    request(app)
+      .get('/tracks')
+      .set('Accept', 'application/json')
+      .expect(200, {}, done);
+  });
 });
 
 describe('/getPlaylists', () => {
@@ -45,7 +52,7 @@ describe('/getPlaylists', () => {
         .set('Accept', 'application/json')
         .expect(500, done);
   });
-  it('with user_id it returns the playlist name', done => {
+  it('With user_id it returns the playlist name', done => {
     app.set('sessionMiddleware', (req, res, next) => {
       req.session = {
         user_id: '123',
@@ -76,7 +83,7 @@ describe('/getPlaylist', () => {
         .set('Accept', 'application/json')
         .expect(500, done);
   });
-  it('with user_id and session id it returns the playlist name', done => {
+  it('With user_id and session id it returns the playlist name', done => {
     app.set('sessionMiddleware', (req, res, next) => {
       req.body = {
         id: '1234',
@@ -98,7 +105,7 @@ describe('/getPlaylist', () => {
 });
 
 describe('/createPlaylist', () => {
-  it('with user_id, session id, name and description it redirects the user', done => {
+  it('With user_id, session id, name and description it redirects the user', done => {
     app.set('sessionMiddleware', (req, res, next) => {
       req.body = {
         description: '1234',
@@ -117,7 +124,7 @@ describe('/createPlaylist', () => {
 });
 
 describe('/editPlaylist', () => {
-  it('adds a song to a playlist', done => {
+  it('Adds a song to a playlist', done => {
     app.set('sessionMiddleware', (req, res, next) => {
       req.session = {
         user_id: '123'
@@ -139,7 +146,7 @@ describe('/editPlaylist', () => {
       })
   });
 
-  it('removes a song to a playlist', done => {
+  it('Removes a song from a playlist', done => {
     app.set('sessionMiddleware', (req, res, next) => {
       req.session = {
         user_id: '123'
