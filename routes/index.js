@@ -18,7 +18,7 @@ const routes = (app) => {
             if (err) {
                 return res.send(null);
             }
-            return res.send(playlists?.filter(({_id}) => _id === '5fb77defdc508d001246760d'));
+            return res.send(playlists.filter(({_id}) => _id === '5fb77defdc508d001246760d'));
         })
     });
 
