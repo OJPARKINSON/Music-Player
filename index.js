@@ -1,19 +1,26 @@
 const express = require('express');
-var uuid = require('uuid');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoDBStore = require("connect-mongodb-session")(session);
+const routes = require('./routes/index')
 
-// const store = new MongoDBStore({
-//   uri: 'mongodb://mongo/passport-jwt',
-//   collection: "sessions"
-// }).on("error", (error) => console.log(error));
+const store = new MongoDBStore({
+  uri: 'mongodb://mongo/music-player',
+  collection: "sessions"
+}).on("error", (error) => console.log(error));
+  
+mongoose.connect('mongodb://mongo/music-player', {
+    keepAlive: true,
+    keepAliveInitialDelay: 300000,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 
 const port = process.env.PORT || 5000;
 const app = express();
-const tracks = require('./fixtures/tracks')
 
 app
     .use(bodyParser.json())
@@ -24,39 +31,10 @@ app
         secret: "Secret",
         resave: false,
         saveUninitialized: true,
+        store
     }));
 
-app.get('/tracks', (req, res) => {
-    console.log(req.session)
-    res.send(tracks);
-});
-
-app.get('/playlists', (req, res) => {
-    console.log(req.session)
-    if (req.session.playlists) {
-        return res.send(req.session.playlists);
-    } else {
-        return res.send(null);
-    }
-});
-
-app.post('/playlist/new', (req, res) => {
-    console.log(req.body)
-    const { name, description } = req.body;
-    const id = uuid.v4()
-    if (req.session.playlists) {
-        req.session.playlists = [
-            ...req.session.playlists,
-            { id, name, description, songs: null}
-        ];
-    } else {
-        req.session.playlists = [
-            { id, name, description, songs: null}
-        ];
-    }
-    console.log(req.session)
-    res.redirect(`/Playlist/${id}`);
-});
+routes(app);
 
 app.use(express.static('build'));
 app.get('/*', (req, res) => {

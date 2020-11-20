@@ -47,8 +47,6 @@ const useStyles = makeStyles((theme) => ({
     background-color: grey;
 `;
 
-
-
 export const MusicControls = ({playback, setPlayback}) => {
     const classes = useStyles();
     useEffect(() => {
@@ -88,7 +86,7 @@ export const MusicControls = ({playback, setPlayback}) => {
                     disabled={!playback.playingList[1]} 
                     aria-label="shuffle" 
                     onClick={() => 
-                        setPlayback({...playback, playingList: playback.playingList.sort(() => randomize())})
+                        setPlayback({...playback, playingList: playback.playingList.sort(() => randomize()), currentSong: 0})
                     }>
                     <ShuffleIcon fontSize="large" />
                 </IconButton>

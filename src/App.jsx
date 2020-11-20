@@ -48,16 +48,16 @@ export const App = () => {
             <CollectionContainer type="Song" songs={tracks} setPlayback={setPlayback} />
           </Route>
           <Route path="/Playlist/:id" >
-            <PlaylistDisplay type="Playlist" songs={tracks} setPlayback={setPlayback}/>
+            <PlaylistDisplay type="Playlist" songs={tracks} playback={playback} setPlayback={setPlayback}/>
           </Route>
           <Route path="/Albums">
-            <MusicList type="Albums" setPlayback={setPlayback} songs={tracks} filteredTracks={filteredTracks} setFilteredTracks={setFilteredTracks}/>
+            <MusicList type="Albums" playback={playback} setPlayback={setPlayback} songs={tracks} filteredTracks={filteredTracks} setFilteredTracks={setFilteredTracks}/>
           </Route>
           <Route path="/Songs">
-            <MusicList type="Songs" setPlayback={setPlayback} songs={tracks} filteredTracks={filteredTracks} setFilteredTracks={setFilteredTracks} />
+            <MusicList type="Songs" playback={playback} setPlayback={setPlayback} songs={tracks} filteredTracks={filteredTracks} setFilteredTracks={setFilteredTracks} />
           </Route>
           <Route path="/">
-            <Home />
+            <Home playback={playback} setPlayback={setPlayback} songs={tracks} />
           </Route>
         </Switch>
       </div>

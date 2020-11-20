@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
+import { IconButton } from '@material-ui/core';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+
 import { AlbumReduce } from '../components/utils'
 
 const TrackListHeader = styled.div`
@@ -9,12 +12,16 @@ const TrackListHeader = styled.div`
     width: 85%;
     margin: 1vw auto;
     align-items: center;
-    input {
+    div {
+        display: flex;
+    }
+    div input {
         height: 40%;
+        align-self: center;
     }
 `
 
-const TrackList = styled.ul`
+export const TrackList = styled.ul`
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 3vw;
@@ -45,7 +52,7 @@ const TrackImage = styled.img`
     }
 `;
 
-const Track = ({track, album, songs, setPlayback}) => (
+export const Track = ({track, album, songs, setPlayback}) => (
     <TrackListItem key={track.track_id}>
         <TrackImage 
             onClick={() => setPlayback({ playingList: album  ? songs.filter(({ album_id }) => album_id === track?.album_id) : [track], playing: true, currentSong: 0})} 
@@ -57,7 +64,7 @@ const Track = ({track, album, songs, setPlayback}) => (
     </TrackListItem>
 );
 
-export const MusicList = ({ type, songs, filteredTracks, setFilteredTracks, setPlayback}) => {
+export const MusicList = ({ type, songs, filteredTracks, setFilteredTracks, playback, setPlayback}) => {
     const handleChange = ({target}) => {
         target.value !== "" ?
             setFilteredTracks(songs.filter(({ track_name }) => 
@@ -69,13 +76,18 @@ export const MusicList = ({ type, songs, filteredTracks, setFilteredTracks, setP
         <>
             <TrackListHeader>
                 <h1>{type}</h1>
-                <input type="text" className="input" onChange={handleChange} placeholder="Search..." />
+                <div>
+                    <IconButton onClick={() => setPlayback({...playback, playing: true, playingList: type === "Albums" ? AlbumReduce(filteredTracks) : filteredTracks})}>
+                        <PlayArrowIcon style={{ fontSize: 50 }} /> 
+                    </IconButton>
+                    <input type="text" className="input" onChange={handleChange} placeholder="Search..." />
+                </div>
             </TrackListHeader>
             <TrackList>
                 {type === "Albums" ? 
-                    AlbumReduce(filteredTracks).map(track => <Track setPlayback={setPlayback} songs={songs} album={type === "Albums"} track={track}/>)
+                    AlbumReduce(filteredTracks)?.map(track => <Track setPlayback={setPlayback} songs={songs} album={type === "Albums"} track={track}/>)
                     :
-                    filteredTracks.map(track => <Track setPlayback={setPlayback} songs={songs} album={type === "Albums"} track={track}/>)
+                    filteredTracks?.map(track => <Track setPlayback={setPlayback} songs={songs} album={type === "Albums"} track={track}/>)
                 }
             </TrackList>
         </>
